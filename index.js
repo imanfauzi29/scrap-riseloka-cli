@@ -1,7 +1,40 @@
 import axios from "axios";
 import fs from "fs";
+import Excel from "exceljs";
+
+const workbox = new Excel.Workbook();
 
 const baseUrl = "https://www.riseloka.com/api/product";
+
+const excelTemplate = {
+  kategory: 1,
+  product_name: 2,
+  description: 3,
+  sku: 4,
+  produk_berbahaya: 5,
+  kode_integrasi: 6,
+  nama_variasi_1: 7,
+  varian_variasi_1: 8,
+  foto_variant: 9,
+  nama_variasi_2: 10,
+  varian_variasi_2: 11,
+  harga: 12,
+  stock: 13,
+  kode_variasi: 14,
+  foto_sampul: 16,
+  foto_product_1: 17,
+  foto_product_2: 18,
+  foto_product_3: 19,
+  foto_product_4: 20,
+  foto_product_5: 21,
+  foto_product_6: 22,
+  foto_product_7: 23,
+  foto_product_8: 24,
+  weight: 25,
+  cashless: 29
+};
+
+const currentRow = 6;
 
 const config = {
   headers: {
@@ -69,7 +102,55 @@ async function grabData(data = []) {
     await delay(3000);
   }
 
-  fs.writeFileSync("./result.json", JSON.stringify(newData));
+  toExcel(newData);
+  fs.writeFileSync("./result/result.json", JSON.stringify(newData));
+}
+
+function toExcel(data = []) {
+  data = fs.readFileSync("./result/kaos_pria.json");
+  data = JSON.parse(data);
+  // const dataLength = data.length;
+
+  // if (dataLength === 0) return;
+
+  let myRow = currentRow;
+  // const endRow = dataLength + currentRow;
+
+  workbox.xlsx
+    .readFile("./template/Shopee_mass_upload_11-04-2023_basic_template.xlsx")
+    .then(() => {
+      const worksheet = workbox.getWorksheet("Template");
+      data.forEach((item) => {
+        item.variants.forEach((variant) => {
+          if (item.description.length < 20) return;
+          const row = worksheet.getRow(myRow);
+          row.getCell(excelTemplate.kategory).value = "100244";
+          row.getCell(excelTemplate.product_name).value = item.name;
+          row.getCell(excelTemplate.description).value =
+            item.description.substring(0, 3000);
+          row.getCell(excelTemplate.sku).value = item.sku;
+          row.getCell(excelTemplate.kode_integrasi).value = item.id;
+          row.getCell(excelTemplate.nama_variasi_1).value = item.variant_1;
+          row.getCell(excelTemplate.varian_variasi_1).value = variant.variant_1;
+          row.getCell(excelTemplate.foto_variant).value = item.imgs[0] ?? null;
+          row.getCell(excelTemplate.nama_variasi_2).value = item.variant_2;
+          row.getCell(excelTemplate.varian_variasi_2).value = variant.variant_2;
+          row.getCell(excelTemplate.harga).value = variant.selling_price;
+          row.getCell(excelTemplate.stock).value = variant.stock;
+          row.getCell(excelTemplate.kode_variasi).value = variant.variant_id;
+          row.getCell(excelTemplate.foto_sampul).value = item.imgs[0];
+          row.getCell(excelTemplate.cashless).value = "Aktif";
+          row.getCell(excelTemplate.weight).value = variant.weight;
+          for (const i in [...Array(8).keys()]) {
+            const index = Number(i) + 1;
+            const result = item.imgs[i] ?? null;
+            row.getCell(excelTemplate[`foto_product_${index}`]).value = result;
+          }
+          myRow += 1;
+        });
+      });
+      workbox.xlsx.writeFile("result.xlsx");
+    });
 }
 
 function delay(time) {
@@ -78,4 +159,5 @@ function delay(time) {
   });
 }
 
-run();
+// run();
+toExcel();
