@@ -1,6 +1,8 @@
-import axios from "axios";
-import fs from "fs";
-import Excel from "exceljs";
+const axios = require("axios");
+const fs = require("fs");
+const Excel = require("exceljs");
+const readline = require("readline-sync");
+const path = require("path");
 
 const workbox = new Excel.Workbook();
 
@@ -34,6 +36,9 @@ const excelTemplate = {
   cashless: 29
 };
 
+const pathName = path.join(__dirname, "result");
+let namaFile = null;
+
 const currentRow = 6;
 
 const config = {
@@ -43,13 +48,28 @@ const config = {
   }
 };
 
-async function run() {
+function main() {
+  const category = readline.question("Masukan no kategory (Jika ada): ");
+  const brand = readline.question("Masukan nama brand (Jika ada): ");
+  const filename = readline.question("Masukan nama file (required): ");
+
+  if (!filename) {
+    console.log("filename required!");
+    return;
+  } else {
+    namaFile = filename.replace(/\s+/, "_") + ".json";
+  }
+
+  run(category, brand);
+}
+
+async function run(category, brand) {
   try {
     console.log("==== GRABBING DATA ====");
     let data = [];
     let page = 1;
     while (true) {
-      const urlList = `${baseUrl}?page=${page}&length=50&sort=recommendation&category=737`;
+      const urlList = `${baseUrl}?page=${page}&length=50&sort=recommendation&category=${category}&brand=${brand}`;
 
       const result = await axios.get(urlList, config).then((res) => res.data);
 
@@ -102,16 +122,16 @@ async function grabData(data = []) {
     await delay(3000);
   }
 
+  fs.writeFileSync(path.join(pathName, namaFile), JSON.stringify(newData));
   toExcel(newData);
-  fs.writeFileSync("./result/result.json", JSON.stringify(newData));
 }
 
 function toExcel(data = []) {
-  data = fs.readFileSync("./result/kaos_pria.json");
+  data = fs.readFileSync(path.join(pathName, namaFile));
   data = JSON.parse(data);
-  // const dataLength = data.length;
+  const dataLength = data.length;
 
-  // if (dataLength === 0) return;
+  if (dataLength === 0) return;
 
   let myRow = currentRow;
   // const endRow = dataLength + currentRow;
@@ -149,7 +169,9 @@ function toExcel(data = []) {
           myRow += 1;
         });
       });
-      workbox.xlsx.writeFile("result.xlsx");
+      workbox.xlsx.writeFile(
+        path.join(pathName, namaFile.replace(".json", ".xlsx"))
+      );
     });
 }
 
@@ -159,5 +181,4 @@ function delay(time) {
   });
 }
 
-// run();
-toExcel();
+main();
