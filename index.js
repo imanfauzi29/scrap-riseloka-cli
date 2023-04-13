@@ -118,10 +118,12 @@ async function grabData(data = []) {
     }
 
     newData.push(grabData.data);
+    // newData.push(grabData.data.category);
     index += 1;
-    await delay(3000);
+    await delay(2000);
   }
 
+  // const filterData = newData.filter((v, x) => newData.indexOf(v) === x);
   fs.writeFileSync(path.join(pathName, namaFile), JSON.stringify(newData));
   toExcel(newData);
 }
@@ -129,6 +131,10 @@ async function grabData(data = []) {
 function toExcel(data = []) {
   data = fs.readFileSync(path.join(pathName, namaFile));
   data = JSON.parse(data);
+  const getShopeeCategory = path.join(
+    __dirname,
+    "template/shopee_category.json"
+  );
   const dataLength = data.length;
 
   if (dataLength === 0) return;
@@ -144,7 +150,8 @@ function toExcel(data = []) {
         item.variants.forEach((variant) => {
           if (item.description.length < 20) return;
           const row = worksheet.getRow(myRow);
-          row.getCell(excelTemplate.kategory).value = "100244";
+          row.getCell(excelTemplate.kategory).value =
+            getShopeeCategory[item.category] ?? null;
           row.getCell(excelTemplate.product_name).value = item.name;
           row.getCell(excelTemplate.description).value =
             item.description.substring(0, 3000);
@@ -152,13 +159,15 @@ function toExcel(data = []) {
           row.getCell(excelTemplate.kode_integrasi).value = item.id;
           row.getCell(excelTemplate.nama_variasi_1).value = item.variant_1;
           row.getCell(excelTemplate.varian_variasi_1).value = variant.variant_1;
-          row.getCell(excelTemplate.foto_variant).value = item.imgs[0] ?? null;
+          row.getCell(excelTemplate.foto_variant).value =
+            item.imgs.length > 0 ? item.imgs[0] : null;
           row.getCell(excelTemplate.nama_variasi_2).value = item.variant_2;
           row.getCell(excelTemplate.varian_variasi_2).value = variant.variant_2;
           row.getCell(excelTemplate.harga).value = variant.selling_price;
           row.getCell(excelTemplate.stock).value = variant.stock;
           row.getCell(excelTemplate.kode_variasi).value = variant.variant_id;
-          row.getCell(excelTemplate.foto_sampul).value = item.imgs[0];
+          row.getCell(excelTemplate.foto_sampul).value =
+            item.imgs.length > 0 ? item.imgs[0] : null;
           row.getCell(excelTemplate.cashless).value = "Aktif";
           row.getCell(excelTemplate.weight).value = variant.weight;
           for (const i in [...Array(8).keys()]) {
