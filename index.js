@@ -10,12 +10,11 @@ const workbox = new Excel.Workbook();
 
 const baseUrl = "https://www.riseloka.com/api/product";
 
+const dateNow = new Date().toLocaleDateString("id-ID", { dateStyle: "medium" });
 const pathName = path.join(__dirname, "result");
 let namaFile = null;
 
 const currentRow = 6;
-
-const dateNow = new Date().toLocaleDateString("id-ID", { dateStyle: "medium" });
 
 const config = {
   headers: {
@@ -24,7 +23,7 @@ const config = {
   }
 };
 
-function main() {
+async function main() {
   const category = readline.question("Masukan no kategory (Jika ada): ");
   const brand = readline.question("Masukan nama brand (Jika ada): ");
   const filename = readline.question("Masukan nama file (required): ");
@@ -36,26 +35,30 @@ function main() {
     namaFile = filename.replace(/\s+/, "_");
   }
 
-  const checkFileExist = checkFile();
+  const checkFileExist = await checkFile();
+
+  console.log(checkFileExist);
 
   // if true skip grab data continue to excel
   if (checkFileExist) {
-    const jsonFileName = `${namaFile}/[${dateNow}]${namaFile}.json`;
+    const jsonFileName = `${namaFile}/(${dateNow})${namaFile}.json`;
     const jsonFile = path.join(pathName, jsonFileName);
+
     const file = fs.readFileSync(jsonFile);
 
     toExcel(JSON.parse(file), jsonFileName);
   } else {
+    console.log("MASUK SINI DONG");
     run(category, brand);
   }
 }
 
 async function checkFile() {
-  const jsonFileName = `${namaFile}/[${dateNow}]${namaFile}.json`;
-  const jsonFile = path.join(pathName, jsonFileName);
-
   const isExist = fs.existsSync(path.join(pathName, namaFile));
   if (!isExist) fs.mkdirSync(path.join(pathName, namaFile));
+
+  const jsonFileName = `${namaFile}/(${dateNow})${namaFile}.json`;
+  const jsonFile = path.join(pathName, jsonFileName);
 
   // check for existing file
   if (fs.existsSync(jsonFile)) {
@@ -142,14 +145,15 @@ async function grabData(data = []) {
   }
 
   // const filterData = newData.filter((v, x) => newData.indexOf(v) === x);
+  const jsonFileName = `${namaFile}/(${dateNow})${namaFile}.json`;
+  const jsonFile = path.join(pathName, jsonFileName);
 
   fs.writeFileSync(jsonFile, JSON.stringify(newData));
 
-  toExcel(newData, jsonFile);
+  toExcel(newData, jsonFileName);
 }
 
 function toExcel(data = [], jsonFileName) {
-  // const fileExist = fs.existsSync(jsonFileName)
   const dataLength = data.length;
 
   if (dataLength === 0) return;

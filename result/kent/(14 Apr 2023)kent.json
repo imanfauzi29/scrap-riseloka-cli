@@ -224,8 +224,8 @@
         "selling_price": 163350,
         "weight": 750,
         "sort": 0,
-        "stock": 19,
-        "last_update": "2023-02-07T00:30:03+07:00",
+        "stock": 18,
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXXXL"
@@ -268,8 +268,8 @@
       { "name": "Warna", "options": ["Tanpa Warna"] },
       { "name": "Ukuran", "options": ["M", "L", "XL", "S"] }
     ],
-    "total_order": 1973,
-    "total_success": 1856,
+    "total_order": 1972,
+    "total_success": 1855,
     "total_canceled": 117,
     "variants": [
       {
@@ -279,7 +279,7 @@
         "weight": 600,
         "sort": 0,
         "stock": 18,
-        "last_update": "2023-03-30T00:30:03+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,M",
         "variant_1": "Tanpa Warna",
         "variant_2": "M"
@@ -291,7 +291,7 @@
         "weight": 600,
         "sort": 0,
         "stock": 16,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,L",
         "variant_1": "Tanpa Warna",
         "variant_2": "L"
@@ -371,7 +371,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 16,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXL"
@@ -383,7 +383,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 16,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXL"
@@ -395,7 +395,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 15,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXXL"
@@ -499,7 +499,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 12,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXXXL"
@@ -507,6 +507,99 @@
     ],
     "category": "Celana Bahan Pria",
     "category_id": 771
+  },
+  {
+    "id": 1613,
+    "name": "CELANA JEANS PRIA - KNT 066",
+    "brand": "Kent",
+    "brand_logo": "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/brand/34-590180748.jpg",
+    "origin": "32.73.17",
+    "province": "Jawa Barat",
+    "city": "Kota Bandung",
+    "sub_district": "Bojongloa Kidul",
+    "slug_brand": "kent",
+    "sku": "KNT 066",
+    "description": "JEANS SLIM\n\nMATERIAL :FULL PRE-WASHED DENIM STRECH (SOFT) = BAHAN NGARET DAN LEMBUT \n\nJAHITAN : RANTAI DAN OVERDEK\nSLETING : YKK\n\nWARNA TIDAK LUNTUR\n\nSIZE : (Panjang & LingkarPinggang)\nS = 27-28 ( P 108cm LP 81cm) \nM = 29-30 (P 109cm LP 83cm)\nL = 31-32 (P 110cm LP 85cm)\nXL = 33-34 (P 111cm LP 87cm) \n\nBERAT : 630 - 680 gram\n\n\nBARANG DI JAMIN SESUAI DENGAN PHOTO. APABILA BARANG TIDAK SESUAI DENGAN PHOTO MAKA DAPAT DITUKAR DAN ONGKOS KIRIM DITANGGUNG OLEH KAMI\n\nKent menyediakan produk dengan kualitas terbaik, bahan terbaik, serta jahitan yang terbaik,\nKarna bagi kami kepuasan pelanggan menjadi tujuan utama bagi kami",
+    "marketing_kit": "https://photos.app.goo.gl/GJNCEqZiRzYVxaBf9",
+    "imgs": [
+      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 A.jpg",
+      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 B.jpg",
+      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 C.jpg"
+    ],
+    "realpic": [
+      "https://s1.riseloka.com/realpic/1613KNT 066aa.jpg",
+      "https://s1.riseloka.com/realpic/1613KNT 066b.jpg",
+      "https://s1.riseloka.com/realpic/1613KNT 066bb.jpg",
+      "https://s1.riseloka.com/realpic/1613KNT 066cc.jpg"
+    ],
+    "max_price": 143000,
+    "min_price": 143000,
+    "max_weight": 650,
+    "min_weight": 650,
+    "selling_price": 157300,
+    "min_selling_price": 157300,
+    "is_wishlist": false,
+    "variant_1": "Warna",
+    "variant_2": "Ukuran",
+    "tier_variants": [
+      { "name": "Warna", "options": ["Tanpa Warna"] },
+      { "name": "Ukuran", "options": ["M", "L", "XL", "S"] }
+    ],
+    "total_order": 356,
+    "total_success": 343,
+    "total_canceled": 13,
+    "variants": [
+      {
+        "variant_id": 2925,
+        "price": 143000,
+        "selling_price": 157300,
+        "weight": 650,
+        "sort": 0,
+        "stock": 10,
+        "last_update": "2022-08-28T00:30:03+07:00",
+        "variants_name": "Tanpa Warna,M",
+        "variant_1": "Tanpa Warna",
+        "variant_2": "M"
+      },
+      {
+        "variant_id": 2926,
+        "price": 143000,
+        "selling_price": 157300,
+        "weight": 650,
+        "sort": 0,
+        "stock": 9,
+        "last_update": "2023-04-14T00:30:04+07:00",
+        "variants_name": "Tanpa Warna,L",
+        "variant_1": "Tanpa Warna",
+        "variant_2": "L"
+      },
+      {
+        "variant_id": 2927,
+        "price": 143000,
+        "selling_price": 157300,
+        "weight": 650,
+        "sort": 0,
+        "stock": 10,
+        "last_update": "2022-10-05T00:30:03+07:00",
+        "variants_name": "Tanpa Warna,XL",
+        "variant_1": "Tanpa Warna",
+        "variant_2": "XL"
+      },
+      {
+        "variant_id": 2928,
+        "price": 143000,
+        "selling_price": 157300,
+        "weight": 650,
+        "sort": 0,
+        "stock": 9,
+        "last_update": "2023-04-14T00:30:04+07:00",
+        "variants_name": "Tanpa Warna,S",
+        "variant_1": "Tanpa Warna",
+        "variant_2": "S"
+      }
+    ],
+    "category": "Celana Cargo Pria",
+    "category_id": 773
   },
   {
     "id": 2449,
@@ -744,7 +837,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 9,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXL"
@@ -768,7 +861,7 @@
         "weight": 750,
         "sort": 0,
         "stock": 9,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,XXXXXL",
         "variant_1": "Tanpa Warna",
         "variant_2": "XXXXXL"
@@ -776,99 +869,6 @@
     ],
     "category": "Celana Bahan Pria",
     "category_id": 771
-  },
-  {
-    "id": 1613,
-    "name": "CELANA JEANS PRIA - KNT 066",
-    "brand": "Kent",
-    "brand_logo": "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/brand/34-590180748.jpg",
-    "origin": "32.73.17",
-    "province": "Jawa Barat",
-    "city": "Kota Bandung",
-    "sub_district": "Bojongloa Kidul",
-    "slug_brand": "kent",
-    "sku": "KNT 066",
-    "description": "JEANS SLIM\n\nMATERIAL :FULL PRE-WASHED DENIM STRECH (SOFT) = BAHAN NGARET DAN LEMBUT \n\nJAHITAN : RANTAI DAN OVERDEK\nSLETING : YKK\n\nWARNA TIDAK LUNTUR\n\nSIZE : (Panjang & LingkarPinggang)\nS = 27-28 ( P 108cm LP 81cm) \nM = 29-30 (P 109cm LP 83cm)\nL = 31-32 (P 110cm LP 85cm)\nXL = 33-34 (P 111cm LP 87cm) \n\nBERAT : 630 - 680 gram\n\n\nBARANG DI JAMIN SESUAI DENGAN PHOTO. APABILA BARANG TIDAK SESUAI DENGAN PHOTO MAKA DAPAT DITUKAR DAN ONGKOS KIRIM DITANGGUNG OLEH KAMI\n\nKent menyediakan produk dengan kualitas terbaik, bahan terbaik, serta jahitan yang terbaik,\nKarna bagi kami kepuasan pelanggan menjadi tujuan utama bagi kami",
-    "marketing_kit": "https://photos.app.goo.gl/GJNCEqZiRzYVxaBf9",
-    "imgs": [
-      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 A.jpg",
-      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 B.jpg",
-      "https://s3.ap-southeast-1.amazonaws.com/s4.bandros.co.id/produk/NEW%202019/kent/KNT 066 C.jpg"
-    ],
-    "realpic": [
-      "https://s1.riseloka.com/realpic/1613KNT 066aa.jpg",
-      "https://s1.riseloka.com/realpic/1613KNT 066b.jpg",
-      "https://s1.riseloka.com/realpic/1613KNT 066bb.jpg",
-      "https://s1.riseloka.com/realpic/1613KNT 066cc.jpg"
-    ],
-    "max_price": 143000,
-    "min_price": 143000,
-    "max_weight": 650,
-    "min_weight": 650,
-    "selling_price": 157300,
-    "min_selling_price": 157300,
-    "is_wishlist": false,
-    "variant_1": "Warna",
-    "variant_2": "Ukuran",
-    "tier_variants": [
-      { "name": "Warna", "options": ["Tanpa Warna"] },
-      { "name": "Ukuran", "options": ["M", "L", "XL", "S"] }
-    ],
-    "total_order": 355,
-    "total_success": 342,
-    "total_canceled": 13,
-    "variants": [
-      {
-        "variant_id": 2925,
-        "price": 143000,
-        "selling_price": 157300,
-        "weight": 650,
-        "sort": 0,
-        "stock": 10,
-        "last_update": "2022-08-28T00:30:03+07:00",
-        "variants_name": "Tanpa Warna,M",
-        "variant_1": "Tanpa Warna",
-        "variant_2": "M"
-      },
-      {
-        "variant_id": 2926,
-        "price": 143000,
-        "selling_price": 157300,
-        "weight": 650,
-        "sort": 0,
-        "stock": 9,
-        "last_update": "2022-06-04T00:30:03+07:00",
-        "variants_name": "Tanpa Warna,L",
-        "variant_1": "Tanpa Warna",
-        "variant_2": "L"
-      },
-      {
-        "variant_id": 2927,
-        "price": 143000,
-        "selling_price": 157300,
-        "weight": 650,
-        "sort": 0,
-        "stock": 10,
-        "last_update": "2022-10-05T00:30:03+07:00",
-        "variants_name": "Tanpa Warna,XL",
-        "variant_1": "Tanpa Warna",
-        "variant_2": "XL"
-      },
-      {
-        "variant_id": 2928,
-        "price": 143000,
-        "selling_price": 157300,
-        "weight": 650,
-        "sort": 0,
-        "stock": 9,
-        "last_update": "2023-04-12T00:30:04+07:00",
-        "variants_name": "Tanpa Warna,S",
-        "variant_1": "Tanpa Warna",
-        "variant_2": "S"
-      }
-    ],
-    "category": "Celana Cargo Pria",
-    "category_id": 773
   },
   {
     "id": 34364,
@@ -937,7 +937,7 @@
         "weight": 650,
         "sort": 0,
         "stock": 9,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Navy,XXXXL",
         "variant_1": "Navy",
         "variant_2": "XXXXL"
@@ -949,7 +949,7 @@
         "weight": 650,
         "sort": 0,
         "stock": 8,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Navy,XXXXXL",
         "variant_1": "Navy",
         "variant_2": "XXXXXL"
@@ -1030,7 +1030,7 @@
         "weight": 600,
         "sort": 0,
         "stock": 9,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,L",
         "variant_1": "Tanpa Warna",
         "variant_2": "L"
@@ -1178,7 +1178,7 @@
         "weight": 600,
         "sort": 0,
         "stock": 4,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,M",
         "variant_1": "Tanpa Warna",
         "variant_2": "M"
@@ -1190,7 +1190,7 @@
         "weight": 600,
         "sort": 0,
         "stock": 4,
-        "last_update": "2023-04-12T00:30:04+07:00",
+        "last_update": "2023-04-14T00:30:04+07:00",
         "variants_name": "Tanpa Warna,L",
         "variant_1": "Tanpa Warna",
         "variant_2": "L"
