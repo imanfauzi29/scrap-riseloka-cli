@@ -12,7 +12,6 @@ class MainScrapper {
   };
 
   #workbox = new Excel.Workbook();
-  #baseUrl = "https://www.riseloka.com/api/product";
   #dateNow = new Date().toLocaleDateString("id-ID", {
     dateStyle: "medium"
   });
@@ -65,10 +64,6 @@ class MainScrapper {
     return this.#resultDir;
   }
 
-  getBaseUrl() {
-    return this.#baseUrl;
-  }
-
   getDateNow() {
     return this.#dateNow;
   }
@@ -99,7 +94,10 @@ class MainScrapper {
 
   async axiosGet(url, config = {}) {
     return await axios
-      .get(url, { ...this.#config, ...config })
+      .get(`${process.env.BASE_URL_PRODUCT}/${url}`, {
+        ...this.#config,
+        ...config
+      })
       .then((res) => res.data);
   }
 

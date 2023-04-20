@@ -89,7 +89,9 @@ class Shopee {
         path.join(pathName, `${MainScrapper.getFilename()}.json`)
       );
 
-      MainScrapper.workboxReadFile(this.#pathNameResult).then(() => {
+      const excelFile = MainScrapper.getInitialInput("inputExcel");
+
+      MainScrapper.workboxReadFile(excelFile).then(() => {
         const rows = MainScrapper.getWorksheet(1).getRows(row, 100);
 
         rows.forEach((row) => {

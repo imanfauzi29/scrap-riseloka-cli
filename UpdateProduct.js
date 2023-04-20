@@ -12,34 +12,45 @@ class Update {
   constructor() {}
 
   async run(row = 7) {
-    this.row = row;
-    const filename = MainScrapper.getInitialInput("filename");
-    MainScrapper.setFilename(
-      `[${MainScrapper.getDateNow()}] mass-update-${filename}-result`
-    );
+    try {
+      this.row = row;
+      const filename = MainScrapper.getInitialInput("filename");
+      MainScrapper.setFilename(
+        `[${MainScrapper.getDateNow()}] mass-update-${filename}-result`
+      );
 
-    return this.readingExcel();
+      console.log("reading excel");
+      const readExcel = await this.readingExcel();
+
+      console.log("fetch data");
+      const fetchData = await this.fetchData(readExcel);
+
+      console.log("updatedata");
+      const updateData = await this.updateData(fetchData);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  readingExcel() {
+  async readingExcel() {
     console.log("==== TRY READING EXCEL FILE ====");
     try {
       const { inputExcel, totalRow } = MainScrapper.getInitialInput();
       const template = inputExcel || this.pathExcelMassUpdate;
 
-      MainScrapper.workboxReadFile(template).then(() => {
+      return await MainScrapper.workboxReadFile(template).then(() => {
         const rows = MainScrapper.getWorksheet(1).getRows(this.row, totalRow);
         const pathFromTitle = [];
 
         console.log("Convert title ke slug");
         rows.forEach((row) => {
-          const replaceSymbol = this.replaceSymbolWithDash(row, 2);
+          const replaceSymbol = MainScrapper.replaceSymbolWithDash(row, 2);
 
           pathFromTitle.push(replaceSymbol);
         });
 
         console.log("Start fetching...");
-        return this.fetchData(MainScrapper.filterSameData(pathFromTitle));
+        return MainScrapper.filterSameData(pathFromTitle);
       });
     } catch (error) {
       console.log(error);
@@ -47,57 +58,66 @@ class Update {
   }
 
   async fetchData(pathFromTitle = []) {
-    const newData = [];
-    if (pathFromTitle.length === 0) {
-      console.log("Data tidak ditemukan!");
-      return;
-    }
-
-    let index = 0;
-
-    while (true) {
-      const grabData = await this.axiosGet(
-        `${this.getBaseUrl()}/slug/${pathFromTitle[index]}`
-      ).then((res) => res.data);
-
-      console.log(`Updating data ke-${index + 1} dari ${pathFromTitle.length}`);
-
-      if (Object.keys(grabData.data).length === 0) {
-        console.log("stop\n\n");
-        break;
+    try {
+      const newData = [];
+      if (pathFromTitle.length === 0) {
+        console.log("Data tidak ditemukan!");
+        return;
       }
 
-      // if (index === 5) break;
+      let index = 0;
 
-      newData.push({
-        name: grabData.name,
-        variants: grabData.variants
-      });
-      index += 1;
-      await MainScrapper.delay(1000);
+      while (true) {
+        const grabData = await MainScrapper.axiosGet(
+          `slug/${pathFromTitle[index]}`
+        ).then((res) => res.data);
+
+        console.log(
+          `Updating data ke-${index + 1} dari ${pathFromTitle.length}`
+        );
+
+        if (Object.keys(grabData).length === 0) {
+          console.log("stop\n\n");
+          break;
+        }
+
+        // if (index === 5) break;
+
+        newData.push({
+          name: grabData.name,
+          variants: grabData.variants
+        });
+        index += 1;
+        await MainScrapper.delay(process.env.SLEEP_TIME);
+      }
+
+      return newData;
+    } catch (error) {
+      console.log(error);
     }
-
-    return await this.updateData(newData);
   }
 
   async updateData(newData) {
-    const pathNameJson = path.join(
-      MainScrapper.getFinalDir(),
-      MainScrapper.getFilename(),
-      `${MainScrapper.getFilename()}.json`
-    );
+    try {
+      const pathName = path.join(
+        MainScrapper.getFinalDir(),
+        MainScrapper.getFilename()
+      );
 
-    if (newData.length === 0) {
-      console.log("Data tidak ditemukan!");
-      return;
+      MainScrapper.checkOrCreatePath(pathName);
+
+      if (newData.length === 0) {
+        console.log("Data tidak ditemukan!");
+        return;
+      }
+
+      fs.writeFileSync(
+        path.join(pathName, `${MainScrapper.getFilename()}.json`),
+        JSON.stringify(newData, null, 4)
+      );
+    } catch (error) {
+      console.log(error);
     }
-
-    fs.writeFileSync(pathNameJson, JSON.stringify(newData, null, 4));
-
-    return {
-      pathName: pathNameJson,
-      data: newData
-    };
   }
 }
 

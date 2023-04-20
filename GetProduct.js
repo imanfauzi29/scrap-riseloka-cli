@@ -98,9 +98,7 @@ class GetRiselokaProduct {
       const data = [];
       let page = 1;
       while (true) {
-        const urlList = MainScrapper.getBaseUrl();
-
-        const result = await MainScrapper.axiosGet(urlList, {
+        const result = await MainScrapper.axiosGet({
           params: { page, category, brand, sort: "recommendation", length: 50 }
         })
           .then((res) => res.data)
@@ -119,7 +117,7 @@ class GetRiselokaProduct {
 
         data.push(...filterId);
         page += 1;
-        await MainScrapper.delay(3000);
+        await MainScrapper.delay(process.env.SLEEP_TIME);
       }
 
       return await this.grabData(data);
@@ -141,9 +139,7 @@ class GetRiselokaProduct {
       }
 
       while (true) {
-        const grabData = await MainScrapper.axiosGet(
-          `${MainScrapper.getBaseUrl()}/slug/${data[index]}`
-        )
+        const grabData = await MainScrapper.axiosGet(`slug/${data[index]}`)
           .then((res) => res.data)
           .catch(console.log);
 
@@ -159,7 +155,7 @@ class GetRiselokaProduct {
         newData.push(grabData);
         // newData.push(grabData.data.category);
         index += 1;
-        await MainScrapper.delay(2000);
+        await MainScrapper.delay(process.env.SLEEP_TIME);
       }
 
       // const filterData = newData.filter((v, x) => newData.indexOf(v) === x);

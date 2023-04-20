@@ -1,3 +1,4 @@
+require("dotenv").config();
 const inquirer = require("inquirer");
 const MainScrapper = require("./MainScrapper");
 const GetProduct = require("./GetProduct");
@@ -16,6 +17,7 @@ class Main {
       "Tokopedia (soon)",
       "Bukalapak (soon)"
     ];
+
     console.log("Hi, please select to scrape");
     const questions = [
       {
@@ -67,11 +69,10 @@ class Main {
           );
         },
         validate(value) {
-          const isTemplateExist = fs.existsSync(
-            path.join(process.cwd(), value)
-          );
+          const isTemplateExist = fs.existsSync(value);
+          console.log(value);
           if (!isTemplateExist) return "Template tidak ditemukan!";
-          value;
+          return true;
         }
       },
       {
@@ -135,24 +136,30 @@ class Main {
   }
 
   async uploadType(pathDir) {
-    const resultDir = path.join(MainScrapper.getResultDir(), pathDir);
-    MainScrapper.checkOrCreatePath(path.join(process.cwd(), resultDir));
-    MainScrapper.setFinalDir(resultDir);
+    try {
+      const resultDir = path.join(MainScrapper.getResultDir(), pathDir);
+      MainScrapper.checkOrCreatePath(path.join(process.cwd(), resultDir));
+      MainScrapper.setFinalDir(resultDir);
 
-    const { typeRequest } = MainScrapper.getInitialInput();
+      const { typeRequest } = MainScrapper.getInitialInput();
 
-    switch (typeRequest) {
-      case UPLOAD_TYPE:
-        GetProduct.main().then((res) => {
-          const { file, jsonFileName } = res;
-          Shopee.createToExcel(file, jsonFileName);
-        });
-        break;
-      case UPDATE_TYPE:
-        UpdateProduct.run();
-        Shopee.updateStockToExcel();
-      default:
-        break;
+      switch (typeRequest) {
+        case UPLOAD_TYPE:
+          GetProduct.main().then((res) => {
+            const { file, jsonFileName } = res;
+            Shopee.createToExcel(file, jsonFileName);
+          });
+          break;
+        case UPDATE_TYPE:
+          await UpdateProduct.run();
+          const pathNameJSON = path.join(resultDir, MainScrapper.getFilename());
+          console.log(pathNameJSON);
+          Shopee.updateStockToExcel(pathNameJSON);
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }
