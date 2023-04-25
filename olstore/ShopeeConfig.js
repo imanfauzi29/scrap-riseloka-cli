@@ -8,7 +8,6 @@ class Shopee {
     process.cwd(),
     "template/Shopee_mass_upload_11-04-2023_basic_template.xlsx"
   );
-  static #pathNameResult = path.join(process.cwd(), "result/update");
   static currentRow = 6;
   constructor() {}
 
@@ -67,7 +66,8 @@ class Shopee {
         const pathExl = path.join(
           MainScrapper.getFinalDir(),
           path.join(
-            MainScrapper.getInitialInput().filename,
+            MainScrapper.getInitialInput("filename"),
+            MainScrapper.getInitialInput("platform"),
             jsonFileName.replace(".json", ".xlsx")
           )
         );

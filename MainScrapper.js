@@ -92,13 +92,15 @@ class MainScrapper {
     return this.#workbox.getWorksheet(index);
   }
 
-  async axiosGet(url, config = {}) {
+  async axiosGet({ url = "", config = {} }) {
     return await axios
-      .get(`${process.env.BASE_URL_PRODUCT}/${url}`, {
+      .get(`${process.env.BASE_URL_PRODUCT}${url}`, {
         ...this.#config,
         ...config
       })
-      .then((res) => res.data);
+      .then((res) => {
+        return res.data;
+      });
   }
 
   writeJson(pathName, data) {
@@ -147,6 +149,11 @@ class MainScrapper {
     return new Promise(function (resolve) {
       setTimeout(resolve, time);
     });
+  }
+
+  toKilogram(grams) {
+    const ratio = 1000;
+    return grams / ratio;
   }
 }
 

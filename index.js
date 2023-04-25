@@ -4,6 +4,7 @@ const MainScrapper = require("./MainScrapper");
 const GetProduct = require("./GetProduct");
 const path = require("path");
 const Shopee = require("./olstore/ShopeeConfig");
+const Akulaku = require("./olstore/AkulakuConfig");
 const fs = require("fs");
 const UpdateProduct = require("./UpdateProduct");
 
@@ -128,6 +129,9 @@ class Main {
         pathDir = "shopee";
         break;
 
+      case "Akulaku":
+        pathDir = "akulaku";
+
       default:
         break;
     }
@@ -147,19 +151,46 @@ class Main {
         case UPLOAD_TYPE:
           GetProduct.main().then((res) => {
             const { file, jsonFileName } = res;
-            Shopee.createToExcel(file, jsonFileName);
+            this.toExcel(file, jsonFileName);
           });
           break;
         case UPDATE_TYPE:
           await UpdateProduct.run();
           const pathNameJSON = path.join(resultDir, MainScrapper.getFilename());
-          console.log(pathNameJSON);
-          Shopee.updateStockToExcel(pathNameJSON);
+          this.toUpdateExcel(pathNameJSON);
+
         default:
           break;
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  toUpdateExcel(pathNameJSON) {
+    const { platform } = MainScrapper.getInitialInput();
+    switch (platform) {
+      case "Shopee":
+        Shopee.updateStockToExcel(pathNameJSON);
+        break;
+      case "Akulaku":
+        Akulaku.updateStockToExcel(pathNameJSON);
+      default:
+        break;
+    }
+  }
+
+  toExcel(file, jsonFileName) {
+    const { platform } = MainScrapper.getInitialInput();
+    switch (platform) {
+      case "Shopee":
+        Shopee.createToExcel(file, jsonFileName);
+        break;
+      case "Akulaku":
+        Akulaku.createToExcel(file, jsonFileName);
+        break;
+      default:
+        break;
     }
   }
 }

@@ -29,9 +29,15 @@ class GetRiselokaProduct {
 
     // if true skip grab data continue to excel
     if (checkFileExists) {
-      const jsonFile = path.join(dir, this.#jsonFileName);
+      const globDir = path
+        .join(dir, `/*${MainScrapper.getInitialInput("filename")}.json`)
+        .replace(/\\/g, "/");
+      let jsonPath = await glob(globDir);
+      if (jsonPath.length > 0) jsonPath = jsonPath[0];
 
-      const file = MainScrapper.readJSONFile(jsonFile);
+      console.log(globDir, jsonPath, typeof globDir, typeof jsonPath);
+
+      const file = MainScrapper.readJSONFile(jsonPath);
 
       return {
         file,
@@ -99,14 +105,20 @@ class GetRiselokaProduct {
       let page = 1;
       while (true) {
         const result = await MainScrapper.axiosGet({
-          params: { page, category, brand, sort: "recommendation", length: 50 }
+          config: {
+            params: {
+              page,
+              category,
+              brand,
+              sort: "recommendation",
+              length: 50
+            }
+          }
         })
           .then((res) => res.data)
           .catch(console.log);
 
-        console.log(result.data.length);
-
-        if (result.data.length === 0) {
+        if (result.data && result.data.length === 0) {
           console.log("stop");
           break;
         }
@@ -139,18 +151,20 @@ class GetRiselokaProduct {
       }
 
       while (true) {
-        const grabData = await MainScrapper.axiosGet(`slug/${data[index]}`)
+        const grabData = await MainScrapper.axiosGet({
+          url: `/slug/${data[index]}`
+        })
           .then((res) => res.data)
           .catch(console.log);
 
         console.log(`Downloading data ke ${index + 1} dari ${totalData + 1}`);
 
-        if (Object.keys(grabData).length === 0) {
+        if (grabData !== undefined && Object.keys(grabData).length === 0) {
           console.log("stop");
           break;
         }
 
-        this.#pushToCategory(grabData.category);
+        this.#pushToCategory(grabData?.category);
 
         newData.push(grabData);
         // newData.push(grabData.data.category);
@@ -176,17 +190,36 @@ class GetRiselokaProduct {
   }
 
   #pushToCategory(category) {
-    const categoryPath = path.join(
-      process.cwd(),
-      "template/shopee_category.json"
-    );
-    let openFile = MainScrapper.readJSONFile(categoryPath);
+    let categoryPath;
+    switch (MainScrapper.getInitialInput("platform")) {
+      case "Shopee":
+        categoryPath = path.join(
+          process.cwd(),
+          "template/shopee_category.json"
+        );
+        break;
+      case "akulaku":
+        categoryPath = path.join(
+          process.cwd(),
+          "template/akulaku_category.json"
+        );
+      default:
+        break;
+    }
+
+    if (!categoryPath) throw new Error("Category path null!");
+
+    this.#pushCategory(categoryPath, category);
+  }
+
+  #pushCategory(path, category) {
+    let openFile = MainScrapper.readJSONFile(path);
 
     if (!openFile[category]) {
       openFile = { ...openFile, [category]: "" };
     }
 
-    fs.writeFileSync(categoryPath, JSON.stringify(openFile, null, 4));
+    fs.writeFileSync(path, JSON.stringify(openFile, null, 4));
   }
 }
 
