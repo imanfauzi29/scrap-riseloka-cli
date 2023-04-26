@@ -7,6 +7,7 @@ const Shopee = require("./olstore/ShopeeConfig");
 const Akulaku = require("./olstore/AkulakuConfig");
 const fs = require("fs");
 const UpdateProduct = require("./UpdateProduct");
+const TiktokShop = require("./olstore/TiktokConfig");
 
 const UPLOAD_TYPE = 0,
   UPDATE_TYPE = 1;
@@ -15,6 +16,7 @@ class Main {
     const choicesList = [
       "Akulaku",
       "Shopee",
+      "Tiktok Shop",
       "Tokopedia (soon)",
       "Bukalapak (soon)"
     ];
@@ -108,6 +110,18 @@ class Main {
         validate(value) {
           return !!value ?? "Please fill the filename";
         }
+      },
+      {
+        type: "input",
+        name: "worksheet",
+        message: "Input worksheet",
+        default: 1
+      },
+      {
+        type: "input",
+        name: "row",
+        message: "Input row",
+        default: 2
       }
     ];
 
@@ -132,6 +146,8 @@ class Main {
       case "Akulaku":
         pathDir = "akulaku";
 
+      case "Tiktok Shop":
+        pathDir = "tiktok shop";
       default:
         break;
     }
@@ -175,6 +191,10 @@ class Main {
         break;
       case "Akulaku":
         Akulaku.updateStockToExcel(pathNameJSON);
+        break;
+      case "Tiktok Shop":
+        TiktokShop.updateStockToExcel(pathNameJSON);
+        break;
       default:
         break;
     }
@@ -189,6 +209,8 @@ class Main {
       case "Akulaku":
         Akulaku.createToExcel(file, jsonFileName);
         break;
+      case "Tiktok Shop":
+        TiktokShop.createToExcel(file, jsonFileName);
       default:
         break;
     }

@@ -31,7 +31,6 @@ class Akulaku {
         data.forEach((item, i) => {
           item &&
             item.variants.forEach((variant) => {
-              console.log(MainScrapper.toKilogram(variant.weight));
               if (item.description.length < 20 || item.imgs === null) return;
               const row = worksheet.getRow(myRow);
               row.getCell(excelTemplate._Kategori_ID).value =

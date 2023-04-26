@@ -203,6 +203,11 @@ class GetRiselokaProduct {
           process.cwd(),
           "template/akulaku_category.json"
         );
+      case "Tiktok Shop":
+        categoryPath = path.join(
+          process.cwd(),
+          "template/tiktok_shop_category.json"
+        );
       default:
         break;
     }
@@ -213,6 +218,7 @@ class GetRiselokaProduct {
   }
 
   #pushCategory(path, category) {
+    if (!fs.existsSync(path)) fs.writeFileSync(path, JSON.stringify({}));
     let openFile = MainScrapper.readJSONFile(path);
 
     if (!openFile[category]) {

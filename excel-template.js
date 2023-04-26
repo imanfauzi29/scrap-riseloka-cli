@@ -1,15 +1,12 @@
 require("dotenv").config();
-const Excel = require("exceljs");
 const path = require("path");
 const fs = require("fs");
-const { glob } = require("glob");
 const MainScrapper = require("./MainScrapper");
-const { program } = require("commander");
-const { default: inquirer } = require("inquirer");
+const inquirer = require("inquirer");
 
 const defaultTemplateFolder = path.join(process.cwd(), "template");
 
-function excel({ file_name, excel_template }) {
+function excel({ file_name, excel_template, worksheet, row }) {
   try {
     const pathJson = path.join(
       defaultTemplateFolder,
@@ -29,7 +26,7 @@ function excel({ file_name, excel_template }) {
       path.join(defaultTemplateFolder, excel_template)
     )
       .then(() => {
-        const rows = MainScrapper.getWorksheet(1).getRow(2);
+        const rows = MainScrapper.getWorksheet(worksheet).getRow(row);
         let i = 1;
 
         while (true) {
@@ -87,6 +84,18 @@ function run() {
         if (!isTemplateExist) return "Template tidak ditemukan!";
         return true;
       }
+    },
+    {
+      type: "input",
+      name: "worksheet",
+      message: "Input worksheet",
+      default: 1
+    },
+    {
+      type: "input",
+      name: "row",
+      message: "Input row",
+      default: 2
     }
   ];
   inquirer
