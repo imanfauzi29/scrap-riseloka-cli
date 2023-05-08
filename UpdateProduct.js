@@ -24,9 +24,6 @@ class Update {
 
       console.log("fetch data");
       const fetchData = await this.fetchData(readExcel);
-
-      console.log("updatedata");
-      const updateData = await this.updateData(fetchData);
     } catch (error) {
       console.log(error);
     }
@@ -43,11 +40,16 @@ class Update {
         const pathFromTitle = [];
 
         console.log("Convert title ke slug");
-        rows.forEach((row) => {
-          const replaceSymbol = MainScrapper.replaceSymbolWithDash(row, 2);
+        let i = 1;
+        while (true) {
+          const value = rows[i].getCell(2).value;
+          if (!value) break;
 
+          const replaceSymbol = MainScrapper.replaceSymbolWithDash(value);
           pathFromTitle.push(replaceSymbol);
-        });
+
+          i++;
+        }
 
         console.log("Start fetching...");
         return MainScrapper.filterSameData(pathFromTitle);
@@ -68,9 +70,9 @@ class Update {
       let index = 0;
 
       while (true) {
-        const grabData = await MainScrapper.axiosGet(
-          `slug/${pathFromTitle[index]}`
-        ).then((res) => res.data);
+        const grabData = await MainScrapper.axiosGet({
+          url: `/slug/${pathFromTitle[index]}`
+        }).then((res) => res.data);
 
         console.log(
           `Updating data ke-${index + 1} dari ${pathFromTitle.length}`
@@ -91,7 +93,8 @@ class Update {
         await MainScrapper.delay(process.env.SLEEP_TIME);
       }
 
-      return newData;
+      console.log(newData);
+      await this.updateData(newData);
     } catch (error) {
       console.log(error);
     }

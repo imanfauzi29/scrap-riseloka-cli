@@ -92,7 +92,10 @@ class Shopee {
       const excelFile = MainScrapper.getInitialInput("inputExcel");
 
       MainScrapper.workboxReadFile(excelFile).then(() => {
-        const rows = MainScrapper.getWorksheet(1).getRows(row, 100);
+        const rows = MainScrapper.getWorksheet(1).getRows(
+          row,
+          MainScrapper.getInitialInput("totalRow")
+        );
 
         rows.forEach((row) => {
           data.forEach((d) => {
@@ -100,7 +103,10 @@ class Shopee {
             if (isName) {
               d.variants.forEach((variant) => {
                 if (variant.variants_name === row.getCell(4).value) {
-                  row.getCell(7).value = variant.selling_price;
+                  row.getCell(7).value = MainScrapper.calculateDiscount(
+                    variant.selling_price,
+                    MainScrapper.getInitialInput("sell_price")
+                  );
                   row.getCell(8).value = variant.stock;
                 }
               });

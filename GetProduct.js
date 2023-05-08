@@ -35,8 +35,6 @@ class GetRiselokaProduct {
       let jsonPath = await glob(globDir);
       if (jsonPath.length > 0) jsonPath = jsonPath[0];
 
-      console.log(globDir, jsonPath, typeof globDir, typeof jsonPath);
-
       const file = MainScrapper.readJSONFile(jsonPath);
 
       return {
@@ -151,6 +149,7 @@ class GetRiselokaProduct {
       }
 
       while (true) {
+        if (data[index] === undefined) break;
         const grabData = await MainScrapper.axiosGet({
           url: `/slug/${data[index]}`
         })
@@ -198,7 +197,7 @@ class GetRiselokaProduct {
           "template/shopee_category.json"
         );
         break;
-      case "akulaku":
+      case "Akulaku":
         categoryPath = path.join(
           process.cwd(),
           "template/akulaku_category.json"
@@ -212,13 +211,13 @@ class GetRiselokaProduct {
         break;
     }
 
-    if (!categoryPath) throw new Error("Category path null!");
+    if (!fs.existsSync(categoryPath))
+      fs.writeFileSync(categoryPath, JSON.stringify({}));
 
     this.#pushCategory(categoryPath, category);
   }
 
   #pushCategory(path, category) {
-    if (!fs.existsSync(path)) fs.writeFileSync(path, JSON.stringify({}));
     let openFile = MainScrapper.readJSONFile(path);
 
     if (!openFile[category]) {

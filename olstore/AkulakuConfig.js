@@ -8,7 +8,11 @@ class Akulaku {
     process.cwd(),
     "template/Bulk_Upload_Template-Indonesia.xlsx"
   );
-  static currentRow = 4;
+  static uploadRow = 4;
+  static updateRow = 7;
+  static sheetUpload = "Sheet1";
+  static sheetUpdate = "Sheet1";
+
   constructor() {}
 
   /**
@@ -22,11 +26,18 @@ class Akulaku {
 
     if (dataLength === 0) return;
 
-    let myRow = this.currentRow;
+    const myRow = this.uploadRow;
+    const { sell_price } = MainScrapper.getInitialInput();
 
     try {
+      const isTemplateExist = fs.existsSync(this.pathExcelTemplate);
+      if (!isTemplateExist)
+        throw new Error(
+          "Template tidak ditemukan, simpan template ke folder template terlebih dahulu."
+        );
+
       MainScrapper.workboxReadFile(this.pathExcelTemplate).then(() => {
-        const worksheet = MainScrapper.getWorksheet("Sheet1");
+        const worksheet = MainScrapper.getWorksheet(this.sheetUpload);
 
         data.forEach((item, i) => {
           item &&
@@ -40,7 +51,11 @@ class Akulaku {
                 item.description.substring(0, 3000);
               row.getCell(excelTemplate._Produk_SKU).value = item.sku;
               row.getCell(excelTemplate.Warna).value = variant.variant_1;
-              row.getCell(excelTemplate._Harga).value = variant.selling_price;
+              row.getCell(excelTemplate._Harga).value =
+                MainScrapper.calculateDiscount(
+                  Number(variant.selling_price),
+                  sell_price
+                );
               row.getCell(excelTemplate._Jumlah).value = variant.stock;
               row.getCell(excelTemplate._Merek).value = item.brand;
               row.getCell(excelTemplate["_ID_Template ongkir"]).value = 0;
@@ -57,7 +72,7 @@ class Akulaku {
                 row.getCell(excelTemplate[`Gambar_Banner ${index}`]).value =
                   result;
               }
-              myRow += 1;
+              myRow++;
             });
         });
 
@@ -80,7 +95,7 @@ class Akulaku {
     }
   }
 
-  static updateStockToExcel(pathName, row = 7) {
+  static updateStockToExcel(pathName) {
     try {
       const data = MainScrapper.readJSONFile(
         path.join(pathName, `${MainScrapper.getFilename()}.json`)
@@ -89,7 +104,10 @@ class Akulaku {
       const excelFile = MainScrapper.getInitialInput("inputExcel");
 
       MainScrapper.workboxReadFile(excelFile).then(() => {
-        const rows = MainScrapper.getWorksheet(1).getRows(row, 100);
+        const rows = MainScrapper.getWorksheet(this.sheetUpdate).getRows(
+          this.updateRow,
+          100
+        );
 
         rows.forEach((row) => {
           data.forEach((d) => {

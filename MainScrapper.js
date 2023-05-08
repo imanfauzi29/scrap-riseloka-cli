@@ -99,6 +99,7 @@ class MainScrapper {
         ...config
       })
       .then((res) => {
+        console.log(res.data, url);
         return res.data;
       });
   }
@@ -120,14 +121,15 @@ class MainScrapper {
     return JSON.parse(data);
   }
 
-  replaceSymbolWithDash(row, cellId) {
-    const regexSymbol = new RegExp(/[^\w\d]/, "g");
-    const getTitle = row.getCell(cellId).value;
+  replaceSymbolWithDash(value) {
+    try {
+      const regexSymbol = new RegExp(/[^\w\d]/, "g");
 
-    const replaceSymbol = getTitle
-      .replace(regexSymbol, "-")
-      .replace(/-+/g, "-");
-    return replaceSymbol;
+      const replaceSymbol = value.replace(regexSymbol, "-").replace(/-+/g, "-");
+      return replaceSymbol;
+    } catch (error) {
+      throw new Error(`Error replace symbol: ${error}`);
+    }
   }
 
   filterSameData(data = []) {
@@ -154,6 +156,10 @@ class MainScrapper {
   toKilogram(grams) {
     const ratio = 1000;
     return grams / ratio;
+  }
+
+  calculateDiscount(price, discount) {
+    return price + price * (discount / 100);
   }
 }
 

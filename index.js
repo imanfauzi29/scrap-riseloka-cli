@@ -55,29 +55,7 @@ class Main {
           return true;
         }
       },
-      {
-        type: "input",
-        name: "inputExcel",
-        message: "Input your excel template",
-        default(value) {
-          if (value.typeRequest === 0) {
-            return path.join(
-              process.cwd(),
-              "template/Shopee_mass_upload_11-04-2023_basic_template.xlsx"
-            );
-          }
-          return path.join(
-            process.cwd(),
-            "template/mass_update_sales_info_464946005_20230414114201.xlsx"
-          );
-        },
-        validate(value) {
-          const isTemplateExist = fs.existsSync(value);
-          console.log(value);
-          if (!isTemplateExist) return "Template tidak ditemukan!";
-          return true;
-        }
-      },
+
       {
         type: "input",
         name: "totalRow",
@@ -111,17 +89,12 @@ class Main {
           return !!value ?? "Please fill the filename";
         }
       },
+
       {
         type: "input",
-        name: "worksheet",
-        message: "Input worksheet",
-        default: 1
-      },
-      {
-        type: "input",
-        name: "row",
-        message: "Input row",
-        default: 2
+        name: "sell_price",
+        message: "Input sell price %: ",
+        default: 0
       }
     ];
 
@@ -145,9 +118,11 @@ class Main {
 
       case "Akulaku":
         pathDir = "akulaku";
+        break;
 
       case "Tiktok Shop":
         pathDir = "tiktok shop";
+        break;
       default:
         break;
     }
